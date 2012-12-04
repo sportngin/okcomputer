@@ -1,28 +1,28 @@
-# -*- encoding: utf-8 -*-
-lib = File.expand_path('../lib', __FILE__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'okcomputer/version'
+$:.push File.expand_path("../lib", __FILE__)
+
+# Maintain your gem's version:
+require "okcomputer/version"
 
 AUTHORS = {
-  "Patrick Byrne" => "code@patrickbyrne.net"
+  "Patrick Byrne" => "patrick.byrne@tstmedia.com",
 }
 
-Gem::Specification.new do |gem|
-  gem.name          = "okcomputer"
-  gem.version       = OKComputer::VERSION
-  gem.authors       = AUTHORS.keys
-  gem.email         = AUTHORS.values
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
-  gem.homepage      = ""
+# Describe your gem and declare its dependencies:
+Gem::Specification.new do |s|
+  s.name        = "okcomputer"
+  s.version     = OKComputer::VERSION
+  s.authors     = AUTHORS.keys
+  s.email       = AUTHORS.values
+  s.homepage    = "TODO"
+  s.summary     = "TODO: Summary of OK Computer."
+  s.description = "TODO: Description of OK Computer."
 
-  gem.files         = `git ls-files`.split($/)
-  gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
-  gem.require_paths = ["lib"]
+  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.rdoc"]
+  s.test_files = Dir["test/**/*"]
 
-  gem.add_runtime_dependency("actionpack")
+  s.add_dependency "rails", "~> 3.0"
+  # s.add_dependency "jquery-rails"
 
-  gem.add_development_dependency("rake")
-  gem.add_development_dependency("rspec")
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "rspec-rails"
 end

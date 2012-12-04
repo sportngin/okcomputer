@@ -1,5 +1,4 @@
-require "okcomputer/version"
+require "okcomputer/engine"
 
 module OKComputer
-  # Your code goes here...
 end
