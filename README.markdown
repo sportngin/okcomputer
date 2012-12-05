@@ -30,8 +30,8 @@ Register additional checks in an initializer, like do:
 
 ```ruby
 # config/initializers/okcomputer.rb
-OKComputer.register OKComputer::Checks::Resque
-OKComputer.register OKComputer::Checks::CPULoad
+OKComputer::Registry.register "resque", OKComputer::Checks::Resque
+OKComputer::Registry.register "load", OKComputer::Checks::CPULoad
 ```
 
 TODO: Figure out interface for configuring checks (e.g., Resque looking for more than 100 jobs in the "critical" queue)
