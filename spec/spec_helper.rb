@@ -14,14 +14,4 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
   config.use_transactional_fixtures = true
-
-  # to prevent having to use use_route: :ok_computer on each controller spec
-  config.before(:each, type: :controller) do
-    @routes = OKComputer::Engine.routes
-  end
-
-  # to get routing specs to even work, since they have no use_route option
-  config.before(:each, type: :routing) do
-    @routes = OKComputer::Engine.routes
-  end
 end
