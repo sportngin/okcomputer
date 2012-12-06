@@ -4,6 +4,7 @@ module OKComputer
     def call
       "Schema version: #{schema_version}"
     rescue ConnectionFailed => e
+      mark_failure
       "Failed to connect: '#{e}'"
     end
 

@@ -13,11 +13,13 @@ module OKComputer
       it "confirms connection to the database" do
         subject.should_receive(:schema_version) { version }
         subject.call.should == "Schema version: #{version}"
+        subject.should be_success
       end
 
       it "returns a valid failure message" do
         subject.should_receive(:schema_version).and_raise(DatabaseCheck::ConnectionFailed, error_message)
         subject.call.should == "Failed to connect: '#{error_message}'"
+        subject.should_not be_success
       end
     end
 

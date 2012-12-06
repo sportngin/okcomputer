@@ -35,5 +35,19 @@ module OKComputer
         subject.to_json.should == "[#{foocheck.to_json},#{barcheck.to_json}]"
       end
     end
+
+    context "#success?" do
+      it "is true if all checks are true" do
+        foocheck.stub(:success?) { true }
+        barcheck.stub(:success?) { true }
+        subject.should be_success
+      end
+
+      it "is failse if any check is false" do
+        foocheck.stub(:success?) { true }
+        barcheck.stub(:success?) { false }
+        subject.should_not be_success
+      end
+    end
   end
 end

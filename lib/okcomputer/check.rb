@@ -2,6 +2,8 @@ module OKComputer
   class Check
     # to be set by Registry upon registration
     attr_accessor :name
+    # nil by default, only set to true if the check deems itself failed
+    attr_accessor :failure_occurred
 
     # Public: Perform the appropriate check
     #
@@ -25,6 +27,18 @@ module OKComputer
       # NOTE swallowing the arguments that Rails passes by default since we don't care. This may prove to be a bad idea
       # Rails passes stuff like this: {:prefixes=>["ok_computer", "application"], :template=>"show", :layout=>#<Proc>}]
       {name => call}.to_json
+    end
+
+    # Public: Whether the check passed
+    #
+    # Returns a boolean
+    def success?
+      not failure_occurred
+    end
+
+    # Public: Mark that this check has failed in some way
+    def mark_failure
+      self.failure_occurred = true
     end
 
     CallNotDefined = Class.new(StandardError)

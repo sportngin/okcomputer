@@ -31,5 +31,12 @@ module OKComputer
       # smooshing their #to_json objects into a JSON array
       "[#{checks.map(&:to_json).join(",")}]"
     end
+
+    # Public: Whether all the checks succeed
+    #
+    # Returns a Boolean
+    def success?
+      checks.all?(&:success?)
+    end
   end
 end
