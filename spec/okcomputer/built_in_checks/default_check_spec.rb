@@ -6,8 +6,10 @@ module OKComputer
       subject.should be_a Check
     end
 
-    it "simply outputs a string to render" do
-      subject.call.should include "OKComputer Site Check Passed"
+    context "#call" do
+      it "simply outputs a string to render" do
+        subject.call.should include "OKComputer Site Check Passed"
+      end
     end
   end
 end
