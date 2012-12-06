@@ -15,6 +15,13 @@ module OKComputer
       raise CheckNotFound, "No check registered with '#{check_name}'"
     end
 
+    # Public: Return an object containing all the registered checks
+    #
+    # Returns a CheckCollection instance
+    def self.all
+      CheckCollection.new registry
+    end
+
     # Public: Register the given check with OKComputer
     #
     # check_name - The name of the check to retrieve

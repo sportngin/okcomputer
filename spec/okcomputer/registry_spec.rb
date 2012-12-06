@@ -24,6 +24,18 @@ module OKComputer
       end
     end
 
+    context ".all" do
+      let(:registry) { {foo: "bar"} }
+      let(:collection) { stub(:check_collection) }
+
+      before do
+        Registry.stub(registry: registry)
+      end
+      it "returns a CheckCollection with all of the registered checks" do
+        CheckCollection.should_receive(:new).with(registry) { collection }
+        Registry.all.should == collection
+      end
+    end
     context ".fetch(check_name)" do
       let(:check_name) { "foo" }
 

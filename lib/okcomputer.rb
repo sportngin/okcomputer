@@ -1,5 +1,6 @@
 require "okcomputer/engine"
 require "okcomputer/check"
+require "okcomputer/check_collection"
 require "okcomputer/registry"
 
 # and the built-in checks

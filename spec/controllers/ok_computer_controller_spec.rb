@@ -5,7 +5,7 @@ describe OkComputerController do
     let(:checks) { stub(:all_checks)}
 
     before do
-      OKComputer::Registry.stub(:registered_checks) { checks }
+      OKComputer::Registry.stub(:all) { checks }
     end
 
     it "performs the basic up check" do

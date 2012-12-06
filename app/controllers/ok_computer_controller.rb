@@ -3,7 +3,7 @@ class OkComputerController < ApplicationController
   respond_to :text, :json
 
   def index
-    checks = OKComputer::Registry.registered_checks
+    checks = OKComputer::Registry.all
 
     respond_with checks
   end
