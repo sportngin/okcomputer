@@ -1,5 +1,5 @@
 module OKComputer
-  class DatabaseCheck < Check
+  class ActiveRecordCheck < Check
     # Public: Return the schema version of the database
     def call
       "Schema version: #{schema_version}"

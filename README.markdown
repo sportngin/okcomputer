@@ -25,11 +25,19 @@ Or install it yourself as:
 To perform the default checks (application running and ActiveRecord database
 connection), do nothing other than adding to your application's Gemfile.
 
-If you use a database adapter other than ActiveRecord, see Registering Custom
-Checks below to build your own database check and register it with the name
-"database" to replace the built-in check, or use
-`OKComputer::Registry.deregister "database"` to stop checking your database
-altogether.
+### If Not Using ActiveRecord
+
+We also include a MongoidCheck, but do not register it. If you use Mongoid,
+replace the default ActiveRecord check like so:
+
+```ruby
+OKComputer::Registry.register "database", OKComputer::MongoidCheck.new
+```
+
+If you use another database adapter, see Registering Custom Checks below to
+build your own database check and register it with the name "database" to
+replace the built-in check, or use `OKComputer::Registry.deregister "database"`
+to stop checking your database altogether.
 
 ### Registering Additional Checks
 
