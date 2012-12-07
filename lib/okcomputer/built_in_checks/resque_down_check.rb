@@ -1,14 +1,5 @@
 module OKComputer
   class ResqueDownCheck < Check
-    attr_accessor :queue
-
-    # Public: Initilize a check for whether Resque is running
-    #
-    # queue - The name of the Resque queue to check
-    def initialize(queue)
-      self.queue = queue
-    end
-
     # Public: Check whether Resque workers are working
     def call
       if queued? and not working?

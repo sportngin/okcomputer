@@ -5,18 +5,8 @@ class Resque; end
 
 module OKComputer
   describe ResqueDownCheck do
-    let(:queue) { "queue name" }
-
-    subject { ResqueDownCheck.new queue }
-
     it "is a Check" do
       subject.should be_a Check
-    end
-
-    context ".new(queue)" do
-      it "accepts a queue name to check whether any jobs are in the queue" do
-        subject.queue.should == queue
-      end
     end
 
     context "#call" do
