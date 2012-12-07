@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    okcomputer (0.0.1)
+    okcomputer (0.1.0)
       rails (~> 3.0)
 
 GEM
