@@ -1,4 +1,4 @@
-class OkComputerController < ApplicationController
+class OkComputerController < ActionController::Base
   layout nil
   respond_to :text, :json
 
