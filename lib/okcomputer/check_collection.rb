@@ -10,6 +10,11 @@ module OKComputer
       self.registry = registry
     end
 
+    # Public: Run the registry's checks
+    def run
+      checks.each(&:run)
+    end
+
     # Public: The list of checks in the collection
     #
     # Returns an Array of the registry's values

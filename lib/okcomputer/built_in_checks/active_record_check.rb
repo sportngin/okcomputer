@@ -1,11 +1,11 @@
 module OKComputer
   class ActiveRecordCheck < Check
     # Public: Return the schema version of the database
-    def call
-      "Schema version: #{schema_version}"
+    def check
+      mark_message "Schema version: #{schema_version}"
     rescue ConnectionFailed => e
       mark_failure
-      "Failed to connect: '#{e}'"
+      mark_message "Failed to connect: '#{e}'"
     end
 
     # Public: The scema version of the app's database

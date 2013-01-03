@@ -14,6 +14,13 @@ module OKComputer
       end
     end
 
+    context "#run" do
+      it "runs its registered checks" do
+        foocheck.should_receive(:run)
+        barcheck.should_receive(:run)
+        subject.run
+      end
+    end
     context "#checks" do
       it "returns the checks from its registry" do
         subject.checks.should == registry.values

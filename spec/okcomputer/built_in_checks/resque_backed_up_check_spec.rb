@@ -26,25 +26,34 @@ module OKComputer
       end
     end
 
-    context "#call" do
+    context "#check" do
       let(:status) { "status text" }
 
-      it "returns success message if count is less than threshold" do
-        subject.stub(:count) { threshold - 1}
-        subject.should_not_receive(:mark_failure)
-        subject.call.should == "Resque queue '#{queue}' at reasonable level (#{subject.count})"
+      context "with the count less than the threshold" do
+        before do
+          subject.stub(:count) { threshold - 1 }
+        end
+
+        it { should be_successful }
+        it { should have_message "Resque queue '#{queue}' at reasonable level (#{subject.count})" }
       end
 
-      it "returns success message if count is equal to threshold" do
-        subject.stub(:count) { threshold }
-        subject.should_not_receive(:mark_failure)
-        subject.call.should == "Resque queue '#{queue}' at reasonable level (#{subject.count})"
+      context "with the count equal to the threshold" do
+        before do
+          subject.stub(:count) { threshold }
+        end
+
+        it { should be_successful }
+        it { should have_message "Resque queue '#{queue}' at reasonable level (#{subject.count})" }
       end
 
-      it "returns failure message if count is greater than threshold" do
-        subject.stub(:count) { threshold + 1 }
-        subject.should_receive(:mark_failure)
-        subject.call.should == "Resque queue '#{queue}' backed up! (#{subject.count})"
+      context "with a count greater than the threshold" do
+        before do
+          subject.stub(:count) { threshold + 1 }
+        end
+
+        it { should_not be_successful }
+        it { should have_message "Resque queue '#{queue}' backed up! (#{subject.count})" }
       end
     end
 

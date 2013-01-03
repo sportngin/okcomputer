@@ -14,12 +14,12 @@ module OKComputer
     end
 
     # Public: Check whether the given queue is backed up
-    def call
+    def check
       if count <= threshold
-        "Resque queue '#{queue}' at reasonable level (#{count})"
+        mark_message "Resque queue '#{queue}' at reasonable level (#{count})"
       else
         mark_failure
-        "Resque queue '#{queue}' backed up! (#{count})"
+        mark_message "Resque queue '#{queue}' backed up! (#{count})"
       end
     end
 

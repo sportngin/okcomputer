@@ -1,23 +1,40 @@
 module OKComputer
   class Check
+    CALL_DEPRECATION_MESSAGE = "Deprecation warning: Please define #check rather than defining #call"
+
     # to be set by Registry upon registration
     attr_accessor :name
     # nil by default, only set to true if the check deems itself failed
     attr_accessor :failure_occurred
+    # nil by default, set by #check to control the output
+    attr_accessor :message
 
-    # Public: Perform the appropriate check
-    #
-    # Your subclass of Check must define its own #call method. This method
-    # must return the string to render when performing the check.
-    def call
-      raise(CallNotDefined, "Your subclass must define its own #call.")
+    # Public: Run the check
+    def run
+      clear
+      check
     end
+
+    # Private: Perform the appropriate check
+    #
+    # Your subclass of Check must define its own #check method. This method
+    # must return the string to render when performing the check.
+    def check
+      if respond_to? :call
+        warn CALL_DEPRECATION_MESSAGE
+        # The old #call methods returned the message, so use that to set the message output
+        mark_message call
+      else
+        raise(CheckNotDefined, "Your subclass must define its own #check.")
+      end
+    end
+    private :check
 
     # Public: The text output of performing the check
     #
     # Returns a String
     def to_text
-      "#{name}: #{call}"
+      "#{name}: #{message}"
     end
 
     # Public: The JSON output of performing the check
@@ -26,7 +43,7 @@ module OKComputer
     def to_json(*args)
       # NOTE swallowing the arguments that Rails passes by default since we don't care. This may prove to be a bad idea
       # Rails passes stuff like this: {:prefixes=>["ok_computer", "application"], :template=>"show", :layout=>#<Proc>}]
-      {name => call}.to_json
+      {name => message}.to_json
     end
 
     # Public: Whether the check passed
@@ -41,6 +58,19 @@ module OKComputer
       self.failure_occurred = true
     end
 
-    CallNotDefined = Class.new(StandardError)
+    # Public: Capture the desired message to display
+    #
+    # message - Text of the message to display for this check
+    def mark_message(message)
+      self.message = message
+    end
+
+    # Public: Clear any prior failures
+    def clear
+      self.failure_occurred = false
+      self.message = nil
+    end
+
+    CheckNotDefined = Class.new(StandardError)
   end
 end

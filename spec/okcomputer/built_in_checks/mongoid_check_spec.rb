@@ -12,20 +12,26 @@ module OKComputer
       subject.should be_a Check
     end
 
-    context "#call" do
+    context "#check" do
       let(:mongodb_name) { "foo" }
       let(:error_message) { "Error message" }
 
-      it "confirms connection to the database" do
-        subject.should_receive(:mongodb_name) { mongodb_name }
-        subject.call.should == "Successfully connected to mongodb #{mongodb_name}"
-        subject.should be_success
+      context "with a successful connection" do
+        before do
+          subject.should_receive(:mongodb_name) { mongodb_name }
+        end
+
+        it { should be_successful }
+        it { should have_message "Successfully connected to mongodb #{mongodb_name}" }
       end
 
-      it "returns a valid failure message" do
-        subject.should_receive(:mongodb_name).and_raise(MongoidCheck::ConnectionFailed, error_message)
-        subject.call.should == "Failed to connect: '#{error_message}'"
-        subject.should_not be_success
+      context "with an unsuccessful connection" do
+        before do
+          subject.should_receive(:mongodb_name).and_raise(MongoidCheck::ConnectionFailed, error_message)
+        end
+
+        it {should_not be_successful }
+        it {should have_message "Failed to connect: '#{error_message}'" }
       end
     end
 

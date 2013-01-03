@@ -1,12 +1,12 @@
 module OKComputer
   class ResqueDownCheck < Check
     # Public: Check whether Resque workers are working
-    def call
+    def check
       if queued? and not working?
         mark_failure
-        "Resque is DOWN. No workers are working the queue."
+        mark_message "Resque is DOWN. No workers are working the queue."
       else
-        "Resque is working"
+        mark_message "Resque is working"
       end
     end
 

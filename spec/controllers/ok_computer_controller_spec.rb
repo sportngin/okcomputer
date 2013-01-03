@@ -12,6 +12,7 @@ describe OkComputerController do
 
     before do
       OKComputer::Registry.stub(:all) { checks }
+      checks.should_receive(:run)
     end
 
     it "performs the basic up check" do
@@ -49,6 +50,7 @@ describe OkComputerController do
 
     before do
       OKComputer::Registry.should_receive(:fetch).with(check_type) { check }
+      check.should_receive(:run)
     end
 
     it "performs the given check and returns text" do
