@@ -75,14 +75,6 @@ end
 OKComputer::Registry.register "check_for_odds", MyCustomCheck.new
 ```
 
-#### Deprecation of Check#call
-
-Versions before 0.2.0 implemented a "#call" method which returned the message.
-This has been deprecated and will be removed in a future version. Please
-define a #check method which calls `mark_failure` and `mark_message` as
-appropriate. In the meantime, OKComputer displays a warning and uses the result
-of the #call method as the message.
-
 ## Performing Checks
 
 * Perform a simple up check: http://example.com/okcomputer
@@ -93,6 +85,33 @@ Checks are available as plain text (by default) or JSON by appending .json, e.g.
 * http://example.com/okcomputer.json
 * http://example.com/okcomputer/all.json
 
+## Deprecations and Breaking Changes
+
+#### Deprecation of Check#call
+
+Versions before 0.2.0 implemented a "#call" method which returned the message.
+This has been deprecated and will be removed in a future version. Please
+define a #check method which calls `mark_failure` and `mark_message` as
+appropriate. In the meantime, OKComputer displays a warning and uses the result
+of the #call method as the message.
+
+#### Breaking Change of JSON Output
+
+Versions before 0.3.0, when performing multiple checks, returned an Array of
+the check results, each being a JSON object. Starting with 0.3.0, these are
+combined into a single JSON object with each check having its own key. For
+example:
+
+**before 0.3.0**
+```json
+[{"check": "result"}, {"other": "result"}]
+```
+
+**0.3.0 and above**
+```json
+{"check": "result", "other": "result"}
+```
+
 ## Contributing
 
 1. Fork it
@@ -102,3 +121,4 @@ Checks are available as plain text (by default) or JSON by appending .json, e.g.
 5. Create new Pull Request
 
 [fitter-happier]:https://rubygems.org/gems/fitter-happier
+

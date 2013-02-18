@@ -33,8 +33,13 @@ module OKComputer
     #
     # Returns a String containing a JSON array of hashes
     def to_json(*args)
-      # smooshing their #to_json objects into a JSON array
-      "[#{checks.map(&:to_json).join(",")}]"
+      # smooshing their #to_json objects into one JSON hash
+      combined = {}
+      checks.each do |check|
+        combined.merge!(JSON.parse(check.to_json))
+      end
+
+      combined.to_json
     end
 
     # Public: Whether all the checks succeed
