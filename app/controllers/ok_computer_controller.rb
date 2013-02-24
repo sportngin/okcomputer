@@ -2,6 +2,8 @@ class OkComputerController < ActionController::Base
   layout nil
   respond_to :text, :json
 
+  before_filter :authenticate
+
   rescue_from OKComputer::Registry::CheckNotFound do |e|
     respond_to do |f|
       f.text { render text: e.message, status: :not_found }
@@ -27,4 +29,13 @@ class OkComputerController < ActionController::Base
     check.success? ? :ok : :error
   end
   private :status_code
+
+  def authenticate
+    if OKComputer.requires_authentication?
+      authenticate_or_request_with_http_basic do |username, password|
+        OKComputer.authenticate(username, password)
+      end
+    end
+  end
+  private :authenticate
 end

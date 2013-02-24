@@ -42,9 +42,18 @@ build your own database check and register it with the name "database" to
 replace the built-in check, or use `OKComputer::Registry.deregister "database"`
 to stop checking your database altogether.
 
+### Requiring Authentication
+
+Optionally require HTTP Basic authentication to view the results of checks in an initializer, like so:
+
+```ruby
+# config/initializers/okcomputer.rb
+OKComputer.require_authentication("username", "password")
+```
+
 ### Registering Additional Checks
 
-Register additional checks in an initializer, like do:
+Register additional checks in an initializer, like so:
 
 ```ruby
 # config/initializers/okcomputer.rb

@@ -13,6 +13,8 @@ describe OkComputerController do
     before do
       OKComputer::Registry.stub(:all) { checks }
       checks.should_receive(:run)
+      # not testing authentication here
+      controller.class.skip_before_filter :authenticate
     end
 
     it "performs the basic up check" do
