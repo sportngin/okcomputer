@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  match "/okcomputer" => "ok_computer#show", defaults: {check: "default", format: "text"}
-  match "/okcomputer/all(.:format)" => "ok_computer#index", defaults: {format: "text"}
-  match "/okcomputer/(:check)(.:format)" => "ok_computer#show", defaults: {format: "text"}
+  match "/okcomputer" => "ok_computer#show", defaults: {check: "default"}
+  match "/okcomputer/all" => "ok_computer#index"
+  match "/okcomputer/:check" => "ok_computer#show"
 end

@@ -17,13 +17,36 @@ describe OkComputerController do
       controller.class.skip_before_filter :authenticate
     end
 
-    it "performs the basic up check" do
+    it "performs the basic up check when format: text" do
       get :index, format: :text
+      response.body.should == checks.to_text
+    end
+
+    it "performs the basic up check when format: html" do
+      get :index, format: :html
+      response.body.should == checks.to_text
+    end
+
+    it "performs the basic up check with accept text/html" do
+      request.accept = "text/html"
+      get :index
+      response.body.should == checks.to_text
+    end
+
+    it "performs the basic up check with accept text/plain" do
+      request.accept = "text/plain"
+      get :index
       response.body.should == checks.to_text
     end
 
     it "performs the basic up check as JSON" do
       get :index, format: :json
+      response.body.should == checks.to_json
+    end
+
+    it "performs the basic up check as JSON with accept application/json" do
+      request.accept = "application/json"
+      get :index
       response.body.should == checks.to_json
     end
 
@@ -56,13 +79,36 @@ describe OkComputerController do
         check.should_receive(:run)
       end
 
-      it "performs the given check and returns text" do
+      it "performs the given check and returns text when format: text" do
         get :show, check: check_type, format: :text
+        response.body.should == check.to_text
+      end
+
+      it "performs the given check and returns text when format: html" do
+        get :show, check: check_type, format: :html
+        response.body.should == check.to_text
+      end
+
+      it "performs the given check and returns text with accept text/html" do
+        request.accept = "text/html"
+        get :show, check: check_type
+        response.body.should == check.to_text
+      end
+
+      it "performs the given check and returns text with accept text/plain" do
+        request.accept = "text/plain"
+        get :show, check: check_type
         response.body.should == check.to_text
       end
 
       it "performs the given check and returns JSON" do
         get :show, check: check_type, format: :json
+        response.body.should == check.to_json
+      end
+
+      it "performs the given check and returns JSON with accept application/json" do
+        request.accept = "application/json"
+        get :show, check: check_type
         response.body.should == check.to_json
       end
 
