@@ -1,5 +1,6 @@
 [![Code Climate](https://codeclimate.com/github/sportngin/okcomputer.png)](https://codeclimate.com/github/sportngin/okcomputer)
 [![Build Status](https://travis-ci.org/sportngin/okcomputer.png)](https://travis-ci.org/sportngin/okcomputer)
+[![Coverage Status](https://coveralls.io/repos/sportngin/okcomputer/badge.png?branch=master)](https://coveralls.io/r/sportngin/okcomputer)
 
 # OK Computer
 
