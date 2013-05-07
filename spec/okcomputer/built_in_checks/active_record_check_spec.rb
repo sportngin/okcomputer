@@ -29,19 +29,5 @@ module OKComputer
       end
     end
 
-    context "#version" do
-      let(:result) { "123" }
-      let(:error_message) { "Wrong password" }
-
-      it "queries from ActiveRecord its installed schema" do
-        ActiveRecord::Migrator.should_receive(:current_version) { result }
-        subject.schema_version.should == result
-      end
-
-      it "raises ConnectionFailed in the event of any error" do
-        ActiveRecord::Migrator.should_receive(:current_version).and_raise(StandardError, error_message)
-        expect { subject.schema_version }.to raise_error(ActiveRecordCheck::ConnectionFailed, error_message)
-      end
-    end
   end
 end
