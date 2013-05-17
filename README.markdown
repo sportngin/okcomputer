@@ -95,6 +95,12 @@ Checks are available as plain text (by default) or JSON by appending .json, e.g.
 * http://example.com/okcomputer.json
 * http://example.com/okcomputer/all.json
 
+## OkComputer NewRelic Ignore
+
+If you use OKComputer for uptime checks, it will start to artificially bring your
+request time down on NewRelic. To avoid that, check out
+[https://github.com/sportngin/okcomputer-newrelic-ignore](this gem).
+
 ## Deprecations and Breaking Changes
 
 #### Deprecation of Check#call
