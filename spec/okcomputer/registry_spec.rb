@@ -2,7 +2,7 @@ require "spec_helper"
 
 module OKComputer
   describe Registry do
-    let(:check_object) { stub(:checker, :name= => nil) }
+    let(:check_object) { stub(:checker, :registrant_name= => nil) }
 
     context ".registry" do
       let(:some_hash) { stub(:hash) }
@@ -52,7 +52,7 @@ module OKComputer
 
     context ".register(check_name, check_object)" do
       let(:check_name) { "foo" }
-      let(:second_check_object) { stub(:checker, :name= => nil) }
+      let(:second_check_object) { stub(:checker, :registrant_name= => nil) }
 
       before do
         # make sure it isn't there yet
@@ -60,7 +60,7 @@ module OKComputer
       end
 
       it "assigns the given name to the checker" do
-        check_object.should_receive(:name=).with(check_name)
+        check_object.should_receive(:registrant_name=).with(check_name)
         Registry.register(check_name, check_object)
       end
 

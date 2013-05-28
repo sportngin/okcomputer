@@ -5,7 +5,7 @@ module OKComputer
     let(:message) { "message" }
 
     it "has a name attribute which it does not set" do
-      subject.name.should be_nil
+      subject.registrant_name.should be_nil
     end
 
     context "#check" do
@@ -53,20 +53,20 @@ module OKComputer
 
     context "displaying the message captured by #check" do
       before do
-        subject.name = "foo"
+        subject.registrant_name = "foo"
         subject.should_not_receive(:call)
         subject.message = message
       end
 
       context "#to_text" do
-        it "combines the name and message" do
-          subject.to_text.should == "#{subject.name}: #{subject.message}"
+        it "combines the registrant_name and message" do
+          subject.to_text.should == "#{subject.registrant_name}: #{subject.message}"
         end
       end
 
       context "#to_json" do
-        it "returns JSON with the name as the key and message as the value" do
-          subject.to_json.should == {subject.name => subject.message}.to_json
+        it "returns JSON with the registrant_name as the key and message as the value" do
+          subject.to_json.should == {subject.registrant_name => subject.message}.to_json
         end
       end
     end

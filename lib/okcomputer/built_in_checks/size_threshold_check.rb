@@ -2,6 +2,7 @@ module OKComputer
   class SizeThresholdCheck < Check
     attr_accessor :size_proc
     attr_accessor :threshold
+    attr_accessor :name
 
     # Public: Initialize a check for a backed-up Resque queue
     #

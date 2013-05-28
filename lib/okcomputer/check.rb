@@ -3,7 +3,7 @@ module OKComputer
     CALL_DEPRECATION_MESSAGE = "Deprecation warning: Please define #check rather than defining #call"
 
     # to be set by Registry upon registration
-    attr_accessor :name
+    attr_accessor :registrant_name
     # nil by default, only set to true if the check deems itself failed
     attr_accessor :failure_occurred
     # nil by default, set by #check to control the output
@@ -34,7 +34,7 @@ module OKComputer
     #
     # Returns a String
     def to_text
-      "#{name}: #{message}"
+      "#{registrant_name}: #{message}"
     end
 
     # Public: The JSON output of performing the check
@@ -43,7 +43,7 @@ module OKComputer
     def to_json(*args)
       # NOTE swallowing the arguments that Rails passes by default since we don't care. This may prove to be a bad idea
       # Rails passes stuff like this: {:prefixes=>["ok_computer", "application"], :template=>"show", :layout=>#<Proc>}]
-      {name => message}.to_json
+      {registrant_name => message}.to_json
     end
 
     # Public: Whether the check passed

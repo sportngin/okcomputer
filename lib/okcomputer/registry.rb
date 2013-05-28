@@ -27,7 +27,7 @@ module OKComputer
     # check_name - The name of the check to retrieve
     # check_object - Instance of Checker to register
     def self.register(check_name, check_object)
-      check_object.name = check_name
+      check_object.registrant_name = check_name
       registry[check_name] = check_object
     end
 
