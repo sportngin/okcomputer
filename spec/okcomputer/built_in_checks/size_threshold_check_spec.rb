@@ -61,7 +61,7 @@ module OKComputer
         end
 
         it { should_not be_successful }
-        it { should have_message "#{name} is over #{subject.threshold} threshold! (#{subject.size})" }
+        it { should have_message "#{name} is #{subject.size - subject.threshold} over threshold! (#{subject.size})" }
       end
     end
 
