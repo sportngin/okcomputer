@@ -5,6 +5,7 @@ require "okcomputer/check_collection"
 require "okcomputer/registry"
 
 # and the built-in checks
+require "okcomputer/built_in_checks/size_threshold_check"
 require "okcomputer/built_in_checks/active_record_check"
 require "okcomputer/built_in_checks/default_check"
 require "okcomputer/built_in_checks/mongoid_check"

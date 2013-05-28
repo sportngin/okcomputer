@@ -31,38 +31,38 @@ module OKComputer
 
       context "with the count less than the threshold" do
         before do
-          subject.stub(:count) { threshold - 1 }
+          subject.stub(:size) { threshold - 1 }
         end
 
         it { should be_successful }
-        it { should have_message "Resque queue '#{queue}' at reasonable level (#{subject.count})" }
+        it { should have_message "Resque queue '#{queue}' at reasonable level (#{subject.size})" }
       end
 
       context "with the count equal to the threshold" do
         before do
-          subject.stub(:count) { threshold }
+          subject.stub(:size) { threshold }
         end
 
         it { should be_successful }
-        it { should have_message "Resque queue '#{queue}' at reasonable level (#{subject.count})" }
+        it { should have_message "Resque queue '#{queue}' at reasonable level (#{subject.size})" }
       end
 
       context "with a count greater than the threshold" do
         before do
-          subject.stub(:count) { threshold + 1 }
+          subject.stub(:size) { threshold + 1 }
         end
 
         it { should_not be_successful }
-        it { should have_message "Resque queue '#{queue}' backed up! (#{subject.count})" }
+        it { should have_message "Resque queue '#{subject.queue}' is over #{subject.threshold} threshold! (#{subject.size})" }
       end
     end
 
-    context "#count" do
-      let(:count) { 123 }
+    context "#size" do
+      let(:size) { 123 }
 
       it "defers to Resque for the job count" do
-        Resque.should_receive(:size).with(subject.queue) { count }
-        subject.count.should == count
+        Resque.should_receive(:size).with(subject.queue) { size }
+        subject.size.should == size
       end
     end
   end

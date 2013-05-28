@@ -1,5 +1,5 @@
 module OKComputer
-  class DelayedJobBackedUpCheck < Check
+  class DelayedJobBackedUpCheck < SizeThresholdCheck
     attr_accessor :priority
     attr_accessor :threshold
 
@@ -17,27 +17,11 @@ module OKComputer
     def initialize(priority, threshold)
       self.priority = Integer(priority)
       self.threshold = Integer(threshold)
-    end
-
-    # Public: Check and report whether delayed jobs are backed up
-    def check
-      if backed_up?
-        mark_failure
-        mark_message "Delayed Jobs within priority '#{priority}' backed up! (#{count})"
-      else
-        mark_message "Delayed Jobs within priority '#{priority}' at reasonable level (#{count})"
-      end
-    end
-
-    # Public: Whether delayed jobs are backed up
-    #
-    # Returns a Boolean
-    def backed_up?
-      count > threshold
+      self.name = "Delayed Jobs within priority '#{priority}'"
     end
 
     # Public: How many delayed jobs are pending within the given priority
-    def count
+    def size
       Delayed::Job.where("priority <= ?", priority).where(:locked_at => nil, :last_error => nil).count
     end
   end

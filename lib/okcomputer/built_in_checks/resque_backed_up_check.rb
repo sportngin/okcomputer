@@ -1,5 +1,5 @@
 module OKComputer
-  class ResqueBackedUpCheck < Check
+  class ResqueBackedUpCheck < SizeThresholdCheck
     attr_accessor :queue
     attr_accessor :threshold
 
@@ -11,20 +11,11 @@ module OKComputer
     def initialize(queue, threshold)
       self.queue = queue
       self.threshold = Integer(threshold)
-    end
-
-    # Public: Check whether the given queue is backed up
-    def check
-      if count <= threshold
-        mark_message "Resque queue '#{queue}' at reasonable level (#{count})"
-      else
-        mark_failure
-        mark_message "Resque queue '#{queue}' backed up! (#{count})"
-      end
+      self.name = "Resque queue '#{queue}'"
     end
 
     # Public: The number of jobs in the check's queue
-    def count
+    def size
       Resque.size(queue)
     end
   end

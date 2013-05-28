@@ -33,47 +33,26 @@ module OKComputer
     end
 
     context "#check" do
-      before do
-        subject.stub(:count) { 123 }
-      end
-
       context "when not backed up" do
         before do
-          subject.stub(:backed_up?) { false }
+          subject.stub(:size) { 99 }
         end
 
         it { should be_successful }
-        it { should have_message "Delayed Jobs within priority '#{priority}' at reasonable level (#{subject.count})"}
+        it { should have_message "Delayed Jobs within priority '#{subject.priority}' at reasonable level (#{subject.size})"}
       end
 
       context "when backed up" do
         before do
-          subject.stub(:backed_up?) { true }
+          subject.stub(:size) { 123 }
         end
 
         it { should_not be_successful }
-        it { should have_message "Delayed Jobs within priority '#{priority}' backed up! (#{subject.count})"}
+        it { should have_message "Delayed Jobs within priority '#{subject.priority}' is over #{subject.threshold} threshold! (#{subject.size})"}
       end
     end
 
-    context "#backed_up?" do
-      it "is true if the count is greater than the threshold" do
-        subject.stub(:count) { threshold + 1 }
-        subject.should be_backed_up
-      end
-
-      it "is false if the count is equal to the threshold" do
-        subject.stub(:count) { threshold }
-        subject.should_not be_backed_up
-      end
-
-      it "is false if the count is less than the threshold" do
-        subject.stub(:count) { threshold - 1 }
-        subject.should_not be_backed_up
-      end
-    end
-
-    context "#count" do
+    context "#size" do
       it "checks Delayed::Job's count of pending jobs within the given priority" do
         pending("looking for a non-terrible way to test this. would like a scope that returns this with a single call (like with Resque check)")
       end
