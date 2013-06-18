@@ -63,6 +63,35 @@ module OKComputer
         it { should_not be_successful }
         it { should have_message "#{name} is #{subject.size - subject.threshold} over threshold! (#{subject.size})" }
       end
+
+      context "when #size raises an ArgumentError" do
+        before do
+          subject.should_receive(:size).and_raise(ArgumentError)
+        end
+
+        it { should_not be_successful }
+        it { should have_message "The given proc MUST return a number (ArgumentError)" }
+      end
+
+      context "when #size raises a TypeError" do
+        before do
+          subject.should_receive(:size).and_raise(TypeError)
+        end
+
+        it { should_not be_successful }
+        it { should have_message "The given proc MUST return a number (TypeError)" }
+      end
+
+      context "when #size raises any other kind of exception" do
+        let(:error) { StandardError.new("some message") }
+
+        before do
+          subject.should_receive(:size).and_raise(error)
+        end
+
+        it { should_not be_successful }
+        it { should have_message "An error occurred: '#{error.message}' (#{error.class})" }
+      end
     end
 
     context "#size" do
@@ -73,12 +102,12 @@ module OKComputer
 
       it "raises an ArgumentError if the proc doesn't return an Integer" do
         size_proc.should_receive(:call).and_return("not a number")
-        lambda { subject.size }.should raise_error(ArgumentError)
+        expect { subject.size }.to raise_error(ArgumentError)
       end
 
       it "raises a TypeError if the proc returns nil" do
         size_proc.should_receive(:call).and_return(nil)
-        lambda { subject.size }.should raise_error(TypeError)
+        expect { subject.size }.to raise_error(TypeError)
       end
     end
   end
