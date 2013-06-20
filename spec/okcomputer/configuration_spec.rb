@@ -3,6 +3,7 @@ require "spec_helper"
 describe OKComputer do
   let(:username) { "foo" }
   let(:password) { "bar" }
+  let(:whitelist) { [:default] }
   let(:bogus) { "asdfasdfasdfas" }
 
   context "#require_authentication" do
@@ -10,20 +11,62 @@ describe OKComputer do
       OKComputer.require_authentication(username, password)
       OKComputer.send(:username).should == username
       OKComputer.send(:password).should == password
+      OKComputer.send(:whitelist).should be_empty
+    end
+
+    it "captures an optional list of whitelisted actions to skip authentication" do
+      OKComputer.require_authentication(username, password, except: whitelist)
+      OKComputer.send(:whitelist).should == whitelist
     end
   end
 
   context "#requires_authentication?" do
-    it "is true if username and password are configured" do
-      OKComputer.send(:username=, username)
-      OKComputer.send(:password=, password)
-      OKComputer.requires_authentication?.should be_true
+    context "with a configured username and password" do
+      before do
+        OKComputer.send(:username=, username)
+        OKComputer.send(:password=, password)
+      end
+
+      context "without a whitelist" do
+        before do
+          OKComputer.send(:options=, {})
+        end
+
+        it "is true" do
+          OKComputer.requires_authentication?.should be_true
+        end
+      end
+
+      context "with a whitelist" do
+        let(:action) { "default" }
+        before do
+          OKComputer.send(:options=, {except: [action]})
+        end
+
+        it "is true for the #index action" do
+          OKComputer.requires_authentication?({action: "index"}).should be_true
+        end
+
+        it "is true for #show if params[:check] is not whitelisted" do
+          OKComputer.requires_authentication?({action: "show", check: "somethingelse"}).should be_true
+        end
+
+        it "is false for #show if params[:check] is whitelisted" do
+          OKComputer.requires_authentication?({action: "show", check: action}).should_not be_true
+        end
+      end
     end
 
-    it "is false if username and password are not configured" do
-      OKComputer.send(:username=, nil)
-      OKComputer.send(:password=, nil)
-      OKComputer.requires_authentication?.should be_false
+    context "without a configured username and password" do
+      before do
+        OKComputer.send(:username=, nil)
+        OKComputer.send(:password=, nil)
+        OKComputer.send(:options=, {})
+      end
+
+      it "is false" do
+        OKComputer.requires_authentication?.should be_false
+      end
     end
   end
 

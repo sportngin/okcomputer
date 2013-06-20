@@ -39,7 +39,7 @@ private
   end
 
   def authenticate
-    if OKComputer.requires_authentication?
+    if OKComputer.requires_authentication?(params)
       authenticate_or_request_with_http_basic do |username, password|
         OKComputer.authenticate(username, password)
       end

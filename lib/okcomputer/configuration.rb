@@ -3,9 +3,20 @@ module OKComputer
   #
   # username - Username required to view checks
   # password - Password required to view checks
-  def self.require_authentication(username, password)
+  # options - Hash of additional options
+  #   - except - Array of checks to skip authentication for
+  #
+  # Examples:
+  #
+  #     OKComputer.require_authentication("foo", "bar")
+  #     # => Require authentication with foo:bar for all checks
+  #
+  #     OKComputer.require_authentication("foo", "bar", except: %w(default nonsecret))
+  #     # => Require authentication with foo:bar for all checks except the checks named "default" and "nonsecret"
+  def self.require_authentication(username, password, options = {})
     self.username = username
     self.password = password
+    self.options = options
   end
 
   # Public: Attempt to authenticate against required username and password
@@ -23,7 +34,9 @@ module OKComputer
   # Public: Whether OKComputer is configured to require authentication
   #
   # Returns a Boolean
-  def self.requires_authentication?
+  def self.requires_authentication?(params={})
+    return false if params[:action] == "show" && whitelist.include?(params[:check])
+
     username && password
   end
 
@@ -52,4 +65,14 @@ module OKComputer
     @password = password
   end
   private_class_method :password=
+
+  # Private: Set, you know, options
+  def self.options=(options)
+    @options = options
+  end
+
+  # Private: Configure a whitelist of checks to skip authentication
+  def self.whitelist
+    @options.fetch(:except) { [] }
+  end
 end
