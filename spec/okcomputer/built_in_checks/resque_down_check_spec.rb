@@ -46,7 +46,7 @@ module OKComputer
 
     context "#queued?" do
       it "is true if Resque says the queue has jobs" do
-        Resque.should_receive(:info) { {pending: 1} }
+        Resque.should_receive(:info) { {pending: 11} }
         subject.should be_queued
       end
 
