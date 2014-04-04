@@ -40,41 +40,19 @@ module OKComputer
     username && password
   end
 
-  # attr_accessor isn't doing what I want inside a module, so here we go.
-
-  # Private: The username configured for access to checks
-  def self.username
-    @username
-  end
+  # Private: The username for access to checks
+  mattr_accessor :username
   private_class_method :username
-
-  # Private: Configure the username to access checks
-  def self.username=(username)
-    @username = username
-  end
   private_class_method :username=
 
-  # Private: The password configured for access to checks
-  def self.password
-    @password
-  end
+  # Private: The password for access to checks
+  mattr_accessor :password
   private_class_method :password
-
-  # Private: Configure the password to access checks
-  def self.password=(password)
-    @password = password
-  end
   private_class_method :password=
 
-  # Private: Set, you know, options
-  def self.options=(options)
-    @options = options
-  end
-
-  # Private: Get, you know, options
-  def self.options
-    @options || {}
-  end
+  # Private: The options container
+  mattr_accessor :options
+  self.options = {}
 
   # Private: Configure a whitelist of checks to skip authentication
   def self.whitelist
