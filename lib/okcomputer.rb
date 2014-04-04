@@ -16,7 +16,7 @@ require "okcomputer/built_in_checks/ruby_version_check"
 
 module OKComputer
 end
+OkComputer = OKComputer
 
 OKComputer::Registry.register "default", OKComputer::DefaultCheck.new
 OKComputer::Registry.register "database", OKComputer::ActiveRecordCheck.new
-
