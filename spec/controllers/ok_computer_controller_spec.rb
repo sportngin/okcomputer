@@ -6,7 +6,7 @@ describe OKComputer::OkComputerController do
 
   describe "GET 'index'" do
     let(:checks) do
-      stub(:all_checks, {
+      double(:all_checks, {
         to_text: "text of the results",
         to_json: "json of the results",
         success?: nil,
@@ -69,7 +69,7 @@ describe OKComputer::OkComputerController do
   describe "GET 'show'" do
     let(:check_type) { "basic" }
     let(:check) do
-      stub(:single_check, {
+      double(:single_check, {
         to_text: "text of check",
         to_json: "json of check",
         success?: nil,

@@ -43,7 +43,7 @@ module OKComputer
     end
 
     context "#mongodb_stats" do
-      let(:database) { stub(:database) }
+      let(:database) { double(:database) }
 
       it "returns a mongodb stats hash" do
         database.should_receive(:stats) { stats }

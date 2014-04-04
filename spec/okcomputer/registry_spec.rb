@@ -2,10 +2,10 @@ require "spec_helper"
 
 module OKComputer
   describe Registry do
-    let(:check_object) { stub(:checker, :registrant_name= => nil) }
+    let(:check_object) { double(:checker, :registrant_name= => nil) }
 
     context ".registry" do
-      let(:some_hash) { stub(:hash) }
+      let(:some_hash) { double(:hash) }
 
       around(:each) do |example|
         existing = Registry.instance_variable_get(:@registry)
@@ -26,7 +26,7 @@ module OKComputer
 
     context ".all" do
       let(:registry) { {foo: "bar"} }
-      let(:collection) { stub(:check_collection) }
+      let(:collection) { double(:check_collection) }
 
       before do
         Registry.stub(registry: registry)
@@ -52,7 +52,7 @@ module OKComputer
 
     context ".register(check_name, check_object)" do
       let(:check_name) { "foo" }
-      let(:second_check_object) { stub(:checker, :registrant_name= => nil) }
+      let(:second_check_object) { double(:checker, :registrant_name= => nil) }
 
       before do
         # make sure it isn't there yet
