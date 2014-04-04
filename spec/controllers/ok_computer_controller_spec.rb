@@ -1,6 +1,9 @@
 require 'spec_helper'
 
-describe OkComputerController do
+describe OKComputer::OkComputerController do
+
+  routes { OKComputer::Engine.routes }
+
   describe "GET 'index'" do
     let(:checks) do
       stub(:all_checks, {

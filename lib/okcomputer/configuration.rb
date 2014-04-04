@@ -40,6 +40,10 @@ module OKComputer
     username && password
   end
 
+  # Public: The route to automatically mount the OkComputer engine
+  mattr_accessor :mount_at
+  self.mount_at = 'okcomputer'
+
   # Private: The username for access to checks
   mattr_accessor :username
   private_class_method :username

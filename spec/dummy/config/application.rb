@@ -10,12 +10,11 @@ module Dummy
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
     config.active_support.escape_html_entities_in_json = true
-    config.assets.enabled = true
-    config.assets.version = '1.0'
+    config.assets.enabled = false
     config.secret_token = 'paranoidandroidsubterraneanhomesickalien'
     config.session_store :cookie_store, key: '_dummy_session'
     config.cache_classes = true
-    config.serve_static_assets = true
+    config.serve_static_assets = false
     config.static_cache_control = "public, max-age=3600"
     config.whiny_nils = true
     config.consider_all_requests_local       = true
