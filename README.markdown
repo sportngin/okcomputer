@@ -57,6 +57,14 @@ Optionally require HTTP Basic authentication to view the results of checks in an
 OKComputer.require_authentication("username", "password")
 ```
 
+### Changing the OKComputer Route
+
+By default, OKComputer routes are mounted at `/okcomputer`. If you'd like to use an alternate route, you can configure it with:
+
+```ruby
+OKComputer.mount_at = 'health_checks'    # mounts at /health_checks
+```
+
 ### Registering Additional Checks
 
 Register additional checks in an initializer, like so:
