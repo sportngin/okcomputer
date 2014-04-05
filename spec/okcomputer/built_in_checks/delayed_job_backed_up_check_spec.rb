@@ -69,6 +69,7 @@ module OKComputer
       end
 
       context "when Mongoid not defined" do
+        before { hide_const 'Mongoid' }
 
         it "checks Delayed::Job's count of pending jobs within the given priority" do
           Delayed::Job.stub(:where).and_return(Delayed::Job)
