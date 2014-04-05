@@ -12,7 +12,9 @@ module OKComputer
     #
     # Returns a hash with the status of the db
     def mongodb_stats
-      Mongoid.database.stats
+      Mongoid.default_session.command(dbStats: 1) # Mongoid 3+
+    rescue
+      Mongoid.database.stats # Mongoid 2
     rescue => e
       raise ConnectionFailed, e
     end
@@ -27,4 +29,3 @@ module OKComputer
     ConnectionFailed = Class.new(StandardError)
   end
 end
-
