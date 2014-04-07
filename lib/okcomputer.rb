@@ -1,4 +1,5 @@
 require "okcomputer/engine"
+require "okcomputer/railtie"
 require "okcomputer/configuration"
 require "okcomputer/check"
 require "okcomputer/check_collection"
