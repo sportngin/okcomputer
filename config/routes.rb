@@ -5,7 +5,8 @@ OKComputer::Engine.routes.draw do
 end
 
 if OKComputer.mount_at
-  Rails.application.routes.draw do
+  # prepend sets at a higher priority than "catchall" routes
+  Rails.application.routes.prepend do
     mount OKComputer::Engine => OKComputer.mount_at, as: "okcomputer"
   end
 end
