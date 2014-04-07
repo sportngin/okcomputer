@@ -22,7 +22,11 @@ module OKComputer
 
     # Public: How many delayed jobs are pending within the given priority
     def size
-      Delayed::Job.where("priority <= ?", priority).where(:locked_at => nil, :last_error => nil).count
+      if defined?(::Mongoid)
+        Delayed::Job.lte(priority: priority).where(:locked_at => nil, :last_error => nil).count
+      else
+        Delayed::Job.where("priority <= ?", priority).where(:locked_at => nil, :last_error => nil).count
+      end
     end
   end
 end

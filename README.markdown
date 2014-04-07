@@ -57,6 +57,27 @@ Optionally require HTTP Basic authentication to view the results of checks in an
 OKComputer.require_authentication("username", "password")
 ```
 
+### Changing the OKComputer Route
+
+By default, OKComputer routes are mounted at `/okcomputer`. If you'd like to use an alternate route,
+you can configure it with:
+
+```ruby
+# config/initializers/okcomputer.rb
+OKComputer.mount_at = 'health_checks'    # mounts at /health_checks
+```
+
+Setting `OKComputer.mount_at = false` will disable automatic mounting, and you can
+write custom code in your `routes.rb` file to mount the engine:
+
+```ruby
+# config/initializers/okcomputer.rb
+OKComputer.mount_at = false
+
+# in routes.rb
+mount OKComputer::Engine => '/okcomputer', as: :okcomputer
+```
+
 ### Registering Additional Checks
 
 Register additional checks in an initializer, like so:
@@ -102,9 +123,8 @@ Checks are available as plain text (by default) or JSON by appending .json, e.g.
 
 ## OkComputer NewRelic Ignore
 
-If you use OKComputer for uptime checks, it will start to artificially bring your
-request time down on NewRelic. To avoid that, check out
-[this gem](https://github.com/sportngin/okcomputer-newrelic-ignore).
+If NewRelic is installed, OkComputer automatically disables NewRelic monitoring for uptime checks,
+as it will start to artificially bring your request time down.
 
 ## Deprecations and Breaking Changes
 

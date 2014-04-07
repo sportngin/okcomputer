@@ -1,9 +1,12 @@
 require 'spec_helper'
 
-describe OkComputerController do
+describe OKComputer::OkComputerController do
+
+  routes { OKComputer::Engine.routes }
+
   describe "GET 'index'" do
     let(:checks) do
-      stub(:all_checks, {
+      double(:all_checks, {
         to_text: "text of the results",
         to_json: "json of the results",
         success?: nil,
@@ -66,7 +69,7 @@ describe OkComputerController do
   describe "GET 'show'" do
     let(:check_type) { "basic" }
     let(:check) do
-      stub(:single_check, {
+      double(:single_check, {
         to_text: "text of check",
         to_json: "json of check",
         success?: nil,
@@ -138,5 +141,37 @@ describe OkComputerController do
     end
 
     it "returns a failure status code if given a status check not already registered"
+  end
+
+  describe 'newrelic_ignore' do
+
+    let(:load_class) do
+      load OKComputer::Engine.root.join("app/controllers/o_k_computer/ok_computer_controller.rb")
+    end
+
+    before do
+      OKComputer.send(:remove_const, 'OkComputerController')
+    end
+
+    context "#newrelic_ignore" do
+
+      context "#when NewRelic is installed" do
+        before do
+          stub_const('NewRelic::Agent::Instrumentation::ControllerInstrumentation', Module.new)
+        end
+
+        it "should inject newrelic_ignore" do
+          Object.any_instance.should_receive(:newrelic_ignore).with(no_args())
+          load_class
+        end
+      end
+
+      context "#when NewRelic is not installed" do
+        it "should not inject newrelic_ignore" do
+          Object.any_instance.should_not_receive(:newrelic_ignore)
+          load_class
+        end
+      end
+    end
   end
 end

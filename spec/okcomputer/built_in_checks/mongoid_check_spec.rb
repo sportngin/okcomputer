@@ -43,12 +43,27 @@ module OKComputer
     end
 
     context "#mongodb_stats" do
-      let(:database) { stub(:database) }
 
-      it "returns a mongodb stats hash" do
-        database.should_receive(:stats) { stats }
-        Mongoid.should_receive(:database) { database }
-        subject.mongodb_stats.should == stats
+      context "Mongoid 3" do
+
+        let(:default_session) { double(:default_session) }
+
+        it "returns a mongodb stats hash" do
+          default_session.should_receive(:command).with(dbStats: 1) { stats }
+          Mongoid.should_receive(:default_session).with(no_args) { default_session }
+          subject.mongodb_stats.should == stats
+        end
+      end
+
+      context "Mongoid 2" do
+
+        let(:database) { double(:database) }
+
+        it "returns a mongodb stats hash" do
+          database.should_receive(:stats) { stats }
+          Mongoid.should_receive(:database) { database }
+          subject.mongodb_stats.should == stats
+        end
       end
     end
   end

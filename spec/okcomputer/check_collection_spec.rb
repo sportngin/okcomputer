@@ -2,8 +2,8 @@ require "spec_helper"
 
 module OKComputer
   describe CheckCollection do
-    let(:foocheck) { stub(:check) }
-    let(:barcheck) { stub(:check) }
+    let(:foocheck) { double(:check) }
+    let(:barcheck) { double(:check) }
     let(:registry) { {foo: foocheck, bar: barcheck} }
 
     subject { CheckCollection.new registry }
