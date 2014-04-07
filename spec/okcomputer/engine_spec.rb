@@ -2,24 +2,6 @@ require "spec_helper"
 
 describe OKComputer::Engine do
 
-  context "#prepend_routes" do
-
-    subject do
-      Rails.application.routes.draw { }
-      Rails.application.routes.routes.map { |route| route.path.spec.to_s }
-    end
-
-    it "should mount_the engine at '/okcomputer' by default" do
-      subject.should include '/okcomputer'
-    end
-
-    it "should mount_the engine at the mount_at option location" do
-      OKComputer.stub(:mount_at).and_return('foo')
-      subject.should include '/foo'
-      subject.should_not include '/okcomputer'
-    end
-  end
-
   context "#ignore_newrelic" do
 
     context "#when NewRelic is installed" do

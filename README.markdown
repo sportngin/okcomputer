@@ -59,10 +59,23 @@ OKComputer.require_authentication("username", "password")
 
 ### Changing the OKComputer Route
 
-By default, OKComputer routes are mounted at `/okcomputer`. If you'd like to use an alternate route, you can configure it with:
+By default, OKComputer routes are mounted at `/okcomputer`. If you'd like to use an alternate route,
+you can configure it with:
 
 ```ruby
+# config/initializers/okcomputer.rb
 OKComputer.mount_at = 'health_checks'    # mounts at /health_checks
+```
+
+Setting `OKComputer.mount_at = false` will disable automatic mounting, and you can
+write custom code in your `routes.rb` file to mount the engine:
+
+```ruby
+# config/initializers/okcomputer.rb
+OKComputer.mount_at = false
+
+# in routes.rb
+mount OKComputer::Engine => '/okcomputer', as: :okcomputer
 ```
 
 ### Registering Additional Checks

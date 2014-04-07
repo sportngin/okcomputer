@@ -3,3 +3,9 @@ OKComputer::Engine.routes.draw do
   match "/all" => "ok_computer#index", via: [:get, :options]
   match "/:check" => "ok_computer#show", via: [:get, :options]
 end
+
+if OKComputer.mount_at
+  Rails.application.routes.draw do
+    mount OKComputer::Engine => OKComputer.mount_at, as: "okcomputer"
+  end
+end

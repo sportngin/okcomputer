@@ -40,7 +40,8 @@ module OKComputer
     username && password
   end
 
-  # Public: The route to automatically mount the OkComputer engine
+  # Public: The route to automatically mount the OkComputer engine. Setting to false
+  # prevents OKComputer from automatically mounting itself.
   mattr_accessor :mount_at
   self.mount_at = 'okcomputer'
 
