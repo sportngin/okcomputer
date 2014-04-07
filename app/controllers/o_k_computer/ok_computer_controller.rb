@@ -5,6 +5,11 @@ module OKComputer
 
     before_filter :authenticate
 
+    if defined?(NewRelic::Agent::Instrumentation::ControllerInstrumentation)
+      include NewRelic::Agent::Instrumentation::ControllerInstrumentation
+      newrelic_ignore
+    end
+
     rescue_from OKComputer::Registry::CheckNotFound do |e|
       respond_to do |f|
         f.any(:text, :html) { render text: e.message, status: :not_found }
