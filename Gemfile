@@ -8,6 +8,7 @@ when /4.0/
 when /4.1/
   gem "rails", "~> 4.1.0"
 else
+  gem "responders", "~> 2.0.0"
   gem "rails", "~> 4.2.0"
 end
 gemspec
