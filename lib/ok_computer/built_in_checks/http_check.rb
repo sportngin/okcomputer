@@ -37,7 +37,7 @@ module OkComputer
     def perform_request
       timeout(request_timeout) do
         req = Net::HTTP::Get.new(url)
-        req.basic_auth(url.user, url.password)
+        req.basic_auth(url.user, url.password) if url.user || url.password
 
         http = Net::HTTP.new(url.hostname, url.port)
         http.read_timeout = request_timeout
