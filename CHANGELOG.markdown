@@ -17,8 +17,7 @@
 
 #### v1.1.0
 
-* Added two new checks:
-    * GenericCacheCheck, which tests that `Rails.cache` is able to read and write.
+* Added one new checks:
     * MongoidReplicaSetCheck, which tests that all of your configured Mongoid replica sets can be reached.
 * Modified CacheCheck to accept an optional Memcached host to test. The default behavior of testing Memcached on the local machine remains unchanged.
 

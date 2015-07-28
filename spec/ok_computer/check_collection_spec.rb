@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe CheckCollection do
     let(:foocheck) { double(:check) }

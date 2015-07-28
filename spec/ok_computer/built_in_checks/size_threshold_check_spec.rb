@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe SizeThresholdCheck do
     let(:size_proc) { lambda{ 123 } }

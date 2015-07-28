@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe SolrCheck do
     let(:host) { "http://localhost:8982/solr" }

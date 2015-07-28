@@ -1,5 +1,3 @@
-require "rails_helper"
-
 # Stubbing the constant out; will exist in apps which have Sidekiq loaded
 module Sidekiq
   class Queue

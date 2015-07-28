@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe HttpCheck do
     let(:url) { "http://localurl:9000" }

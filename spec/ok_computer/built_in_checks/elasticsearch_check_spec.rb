@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe ElasticsearchCheck do
     let(:host) { "http://localhost:9200" }
@@ -43,7 +41,7 @@ module OkComputer
               status: "yellow",
               number_of_nodes: 1
             }
-          end     
+          end
 
           it { should be_successful }
           it { should have_message "Connected to elasticseach cluster 'elasticsearch', 1 nodes, status 'yellow'" }
@@ -56,7 +54,7 @@ module OkComputer
               status: "red",
               number_of_nodes: 1
             }
-          end     
+          end
 
           it { should_not be_successful }
           it { should have_message "Connected to elasticseach cluster 'elasticsearch', 1 nodes, status 'red'" }
