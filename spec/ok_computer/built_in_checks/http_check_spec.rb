@@ -59,7 +59,7 @@ module OkComputer
     describe "#perform_request" do
       context "when the connection is successful" do
         before do
-          subject.url.stub(:read).and_return("foo")
+          Net::HTTP.any_instance.stub(:request).and_return("foo")
         end
 
         it "returns the response body" do
@@ -71,7 +71,7 @@ module OkComputer
         let(:error_message) { "Error message" }
 
         before do
-          subject.url.stub(:read).and_raise(Errno::ENETUNREACH)
+          Net::HTTP.any_instance.stub(:request).and_raise(Errno::ENETUNREACH)
         end
 
         it "raises a ConnectionFailed error" do
