@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 describe OkComputer::OkComputerController do
 
   routes { OkComputer::Engine.routes }

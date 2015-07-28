@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe ActiveRecordCheck do
     it "is a subclass of Check" do

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe Registry do
     let(:check_object) { double(:checker, :registrant_name= => nil) }

@@ -1,5 +1,3 @@
-require "rails_helper"
-
 describe OkComputer do
   let(:username) { "foo" }
   let(:password) { "bar" }

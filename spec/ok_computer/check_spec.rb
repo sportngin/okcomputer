@@ -1,5 +1,3 @@
-require "rails_helper"
-
 module OkComputer
   describe Check do
     let(:message) { "message" }

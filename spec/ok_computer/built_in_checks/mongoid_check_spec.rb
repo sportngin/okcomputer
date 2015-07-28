@@ -1,5 +1,3 @@
-require "rails_helper"
-
 # Stubbing the constant out; will exist in apps which have Mongoid loaded
 module Mongoid
   module Sessions
@@ -20,7 +18,7 @@ module OkComputer
       before do
         Mongoid.stub(:sessions)
       end
-        
+
       it "uses the default session by default" do
         expect(Mongoid::Sessions).to receive(:with_name).with(:default).and_return(session)
         expect(subject.session).to eq(session)
