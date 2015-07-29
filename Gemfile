@@ -10,4 +10,9 @@ when /4.1/
 else
   gem "rails", "~> 4.2.0"
 end
+
+group :test do
+  gem 'webmock'
+end
+
 gemspec

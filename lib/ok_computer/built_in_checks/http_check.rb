@@ -36,14 +36,14 @@ module OkComputer
     # Otherwise raises a HttpCheck::ConnectionFailed error.
     def perform_request
       timeout(request_timeout) do
-        req = Net::HTTP::Get.new(url)
+        req = Net::HTTP::Get.new(url.request_uri)
         req.basic_auth(url.user, url.password) if url.user || url.password
 
         http = Net::HTTP.new(url.hostname, url.port)
         http.read_timeout = request_timeout
         http.use_ssl = url.scheme == 'https'
 
-        http.request(req)
+        http.request(req).body
       end
     rescue => e
       raise ConnectionFailed, e
