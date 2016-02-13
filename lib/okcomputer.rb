@@ -1,5 +1,6 @@
 require "ok_computer/configuration" # must come before engine
-require "ok_computer/engine"
+require "ok_computer/engine" if defined?(Rails)
+require "ok_computer/grape_api" if defined?(Grape)
 require "ok_computer/check"
 require "ok_computer/check_collection"
 require "ok_computer/registry"

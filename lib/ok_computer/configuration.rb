@@ -40,35 +40,36 @@ module OkComputer
     username && password
   end
 
-  # Public: The route to automatically mount the OkComputer engine. Setting to false
-  # prevents OkComputer from automatically mounting itself.
-  mattr_accessor :mount_at
-  self.mount_at = 'okcomputer'
+  class << self
+    # Public: The route to automatically mount the OkComputer engine. Setting to false
+    # prevents OkComputer from automatically mounting itself.
+    attr_accessor :mount_at
 
-  # Public: whether to execute checks in parallel.
-  mattr_accessor :check_in_parallel
-  self.check_in_parallel = false
+    # Public: whether to execute checks in parallel.
+    attr_accessor :check_in_parallel
 
-  # Public: Option to disable third-party app performance tools (.e.g NewRelic) from counting OkComputer routes towards their total.
-  mattr_accessor :analytics_ignore
-  self.analytics_ignore = true
+    # Public: Option to disable third-party app performance tools (.e.g NewRelic) from counting OkComputer routes towards their total.
+    attr_accessor :analytics_ignore
 
-  # Private: The username for access to checks
-  mattr_accessor :username
-  private_class_method :username
-  private_class_method :username=
+    # Private: The username for access to checks
+    attr_accessor :username
 
-  # Private: The password for access to checks
-  mattr_accessor :password
-  private_class_method :password
-  private_class_method :password=
+    # Private: The password for access to checks
+    attr_accessor :password
 
-  # Private: The options container
-  mattr_accessor :options
-  self.options = {}
+    # Private: The options container
+    attr_accessor :options
 
-  # Private: Configure a whitelist of checks to skip authentication
-  def self.whitelist
-    options.fetch(:except) { [] }
+    # # Private: Configure a whitelist of checks to skip authentication
+    def whitelist
+      options.fetch(:except) { [] }
+    end
   end
+
+  # set default configuration options defined above
+  @mount_at = 'okcomputer'
+  @check_in_parallel = false
+  @analytics_ignore = true
+  @options = {}
+
 end
