@@ -1,3 +1,4 @@
+require 'grape'
 require 'coveralls'
 Coveralls.wear!
 
