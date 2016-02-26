@@ -59,7 +59,7 @@ module OkComputer
     describe "#perform_request" do
       context "when the connection is successful" do
         before do
-          subject.url.stub(:read).and_return("foo")
+          stub_request(:get, url).to_return(body: 'foo')
         end
 
         it "returns the response body" do
@@ -71,7 +71,7 @@ module OkComputer
         let(:error_message) { "Error message" }
 
         before do
-          subject.url.stub(:read).and_raise(Errno::ENETUNREACH)
+          stub_request(:get, url).to_raise(Errno::ENETUNREACH)
         end
 
         it "raises a ConnectionFailed error" do
@@ -82,7 +82,7 @@ module OkComputer
       context "when the connection takes too long" do
         before do
           subject.request_timeout = 0.1
-          subject.url.stub(:read) { sleep(subject.request_timeout + 0.1) }
+          stub_request(:get, url).with { sleep(subject.request_timeout + 0.1) }
         end
 
         it "raises a ConnectionFailed error" do
