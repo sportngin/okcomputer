@@ -12,7 +12,9 @@ module OkComputer
     #
     # Returns a String with the version number
     def schema_version
-      ActiveRecord::Migrator.current_version
+      ActiveRecord::Base.connection_pool.with_connection do |conn|
+        ActiveRecord::Migrator.current_version(conn)
+      end
     rescue => e
       raise ConnectionFailed, e
     end
