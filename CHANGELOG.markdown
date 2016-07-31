@@ -1,3 +1,8 @@
+#### v1.8.1
+
+* making JSON view default
+* making all checks display by default
+
 #### v1.8.0
 
 * No longer display name of requested check when no matching check is found. This eliminates possibility of XSS vulnerability with maliciously crafted requests.
