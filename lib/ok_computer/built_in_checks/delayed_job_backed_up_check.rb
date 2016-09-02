@@ -5,6 +5,7 @@ module OkComputer
                   :queue,
                   :include_locked,
                   :include_errored,
+                  :ignore_delayed,
                   :greater_than_priority
 
     # Public: Initialize a check for backed-up Delayed Job jobs
@@ -15,6 +16,7 @@ module OkComputer
     #    queue - Used to monitor a specific delayed job queue (default: nil)
     #    include_locked - If true, will include currently locked jobs in the query (default: false)
     #    include_errored - If true, will include currently errored jobs in the query (default: false)
+    #    ignore_delayed - If true, will not count jobs scheduled for later (default: false)
     #    greater_than_priority - If true, will include all jobs with a priority value equal or greater than the set value.
     #
     # Example:
@@ -28,6 +30,7 @@ module OkComputer
       self.queue = options[:queue]
       self.include_locked = !!options[:include_locked]
       self.include_errored = !!options[:include_errored]
+      self.ignore_delayed = !!options[:ignore_delayed]
       self.greater_than_priority = !!options[:greater_than_priority]
       self.name = greater_than_priority ? "Delayed Jobs with priority higher than '#{priority}'" : "Delayed Jobs with priority lower than '#{priority}'"
     end
@@ -36,9 +39,13 @@ module OkComputer
     def size
       if defined?(::Delayed::Backend::Mongoid::Job) && Delayed::Worker.backend == Delayed::Backend::Mongoid::Job
         query = greater_than_priority ? Delayed::Job.gte(priority: priority) : Delayed::Job.lte(priority: priority)
+        # TODO: is this the Mongoid equivalent of
+        # query = query.where("run_at <= ?", Time.current) if ignore_delayed
+        query = query.lte(run_at: Time.current) if ignore_delayed
       else
         operator = greater_than_priority ? ">=" : "<="
         query = Delayed::Job.where("priority #{operator} ?", priority)
+        query = query.where("run_at <= ?", Time.current) if ignore_delayed
       end
       opts = {}
       opts[:queue] = queue if queue
