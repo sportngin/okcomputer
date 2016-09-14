@@ -70,8 +70,11 @@ module OkComputer
       end
 
       context "when using a cache without stats" do
-        it "should return an empty string" do
-          subject.stats.should eq ""
+        it 'use GenericCacheCheck' do
+          generic_cache_check = double(GenericCacheCheck)
+          expect(generic_cache_check).to receive(:check)
+          expect(GenericCacheCheck).to receive(:new).and_return(generic_cache_check)
+          subject.check
         end
       end
     end
