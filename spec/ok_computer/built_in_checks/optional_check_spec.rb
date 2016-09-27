@@ -27,8 +27,24 @@ module OkComputer
       end
 
       it "combines the upstream data with an optional flag" do
-        subject.to_text.should eq "#{check.to_text} (OPTIONAL)"
+        subject.to_text.should eq "(OPTIONAL) #{check.to_text}"
       end
     end
+
+    context '#to_json' do
+      before do
+        check.registrant_name = "foo"
+        check.message = "message"
+        check.should_not_receive(:call)
+        check.mark_failure
+      end
+
+      it "combines the upstream data with '(OPTIONAL)' string before registrant_name" do
+        result_as_hash = JSON.parse subject.to_json
+        result_as_hash.keys.size.should eq 1
+        result_as_hash.keys.first.should eq  "(OPTIONAL) #{check.registrant_name}"
+      end
+    end
+
   end
 end
