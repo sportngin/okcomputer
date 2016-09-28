@@ -11,6 +11,7 @@ require "ok_computer/built_in_checks/http_check"
 
 require "ok_computer/built_in_checks/active_record_check"
 require "ok_computer/built_in_checks/app_version_check"
+require "ok_computer/built_in_checks/bundle_audit_check"
 require "ok_computer/built_in_checks/cache_check"
 require "ok_computer/built_in_checks/default_check"
 require "ok_computer/built_in_checks/delayed_job_backed_up_check"
