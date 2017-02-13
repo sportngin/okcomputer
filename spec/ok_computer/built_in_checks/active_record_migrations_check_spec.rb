@@ -6,13 +6,15 @@ module OkComputer
       subject.should be_a Check
     end
 
-    context '#new' do
+    context '#initialize' do
       context "On active record < 4" do
         before do
           expect(ActiveRecord::Migrator).to receive(:respond_to?).and_return(false)
         end
 
-        it { should raise_error }
+        it "raises error" do
+          expect { subject }.to raise_error(NotImplementedError)
+        end
       end
 
       context "On active record > 4" do

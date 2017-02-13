@@ -3,7 +3,7 @@ module OkComputer
 
     def initialize
       unless ActiveRecord::Migrator.respond_to?(:needs_migration?)
-        abort "ActiveRecord::Migrator.needs_migration? can't be called."
+        fail NotImplementedError, "ActiveRecord::Migrator.needs_migration? can't be called."
         "This OkComputer check only works on ActiveRecord > 4"
       end
       super
