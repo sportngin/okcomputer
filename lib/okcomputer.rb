@@ -12,6 +12,7 @@ require "ok_computer/built_in_checks/ping_check"
 
 require "ok_computer/built_in_checks/action_mailer_check"
 require "ok_computer/built_in_checks/active_record_check"
+require "ok_computer/built_in_checks/active_record_migrations_check"
 require "ok_computer/built_in_checks/app_version_check"
 require "ok_computer/built_in_checks/cache_check"
 require "ok_computer/built_in_checks/default_check"
