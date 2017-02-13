@@ -12,9 +12,8 @@ module OkComputer
           expect(ActiveRecord::Migrator).to receive(:respond_to?).and_return(false)
         end
 
-        it "raises error" do
-          expect { subject }.to raise_error(NotImplementedError)
-        end
+        subject { -> { ActiveRecordMigrationsCheck.new } }
+        it { is_expected.to raise_error(NotImplementedError) }
       end
 
       context "On active record > 4" do
