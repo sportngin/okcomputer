@@ -2,6 +2,10 @@ require "rails_helper"
 
 module OkComputer
   describe ActiveRecordMigrationsCheck do
+    unless ActiveRecord::Migrator.respond_to?(:needs_migration?)
+      before { skip }
+    end
+
     it "is a subclass of Check" do
       subject.should be_a Check
     end
