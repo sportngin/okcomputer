@@ -1,8 +1,17 @@
 module OkComputer
   class ActiveRecordMigrationsCheck < Check
+
+    def initialize
+      unless ActiveRecord::Migrator.respond_to?(:needs_migration?)
+        abort "ActiveRecord::Migrator.needs_migration? can't be called."
+        "This OkComputer check only works on ActiveRecord > 4"
+      end
+      super
+    end
+
     # Public: Check if migrations are pending or not
     def check
-      if needs_migration?
+      if ActiveRecord::Migrator.needs_migration?
         mark_failure
         mark_message "Pending migrations"
       else
@@ -10,15 +19,5 @@ module OkComputer
       end
     end
 
-    private
-
-    def needs_migration?
-      if ActiveRecord::Migrator.respond_to?(:needs_migration?)
-        return ActiveRecord::Migrator.needs_migration?
-      else
-        (ActiveRecord::Migrator.migrations(ActiveRecord::Migrator.migrations_paths).collect(&:version) -
-         ActiveRecord::Migrator.get_all_versions(ActiveRecord::Base.connection)).size > 0
-      end
-    end
   end
 end
