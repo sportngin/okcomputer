@@ -40,6 +40,7 @@ module OkComputer
     # check_object - Instance of Checker to register
     # collection_name - The name of the check collection the check should be registered to
     def self.register(check_name, check_object, collection_name=nil)
+      check_name &&= check_name.to_s
       check_object.registrant_name = check_name
       find_collection(collection_name).register(check_name, check_object)
     end
@@ -49,7 +50,7 @@ module OkComputer
     # check_name - The name of the check to retrieve
     # collection_name - The name of the check collection the check should be deregistered from
     def self.deregister(check_name, collection_name=nil)
-      find_collection(collection_name).deregister(check_name)
+      find_collection(collection_name).deregister(check_name.to_s)
     end
 
     private_class_method def self.find_collection(collection_name=nil)

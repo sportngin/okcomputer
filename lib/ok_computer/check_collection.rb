@@ -6,7 +6,7 @@ module OkComputer
     #
     # display - the display name for the Check Collection
     def initialize(display)
-      self.display = display
+      self.display = display.to_s
       self.collection = {}
     end
 
@@ -20,6 +20,7 @@ module OkComputer
     # key - a check or collection name
     # throws a KeyError when the key is not found
     def fetch(key, default=nil)
+      key &&= key.to_s
       found_in = self_and_sub_collections.detect{ |c| c[key] }
       raise KeyError unless found_in
       found_in[key]
@@ -68,14 +69,14 @@ module OkComputer
     #
     # Returns the check
     def register(name, check)
-      collection[name] = check
+      collection[name.to_s] = check
     end
 
     # Public: Deregisters a check from the collection
     #
     # Returns the check
     def deregister(name)
-      check = collection.delete(name)
+      check = collection.delete(name.to_s)
     end
 
     # Public: The text of each check in the collection
