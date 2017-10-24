@@ -9,11 +9,11 @@ module OkComputer
 
     # Public: Initialize a new Redis check.
     #
-    # redis_config - The configuration of the Redis instance.
-    #   Expects any valid configuration that can be passed to Redis.new.
+    # redis_configs - The configuration of the Redis instance.
+    #   Expects any valid arguments that can be passed to Redis.new.
     #   See https://github.com/redis/redis-rb#getting-started
-    def initialize(redis_config)
-      @redis_config = redis_config
+    def initialize(*redis_args)
+      @redis_args = redis_args
     end
 
     # Public: Return the status of Redis.
@@ -35,7 +35,7 @@ module OkComputer
 
     # Returns a redis instance based on configuration
     def redis
-      @redis ||= ::Redis.new(redis_config)
+      @redis ||= ::Redis.new(*redis_args)
     end
 
     ConnectionFailed = Class.new(StandardError)
