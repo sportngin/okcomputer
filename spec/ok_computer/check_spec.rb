@@ -64,7 +64,7 @@ module OkComputer
 
       context "#to_text" do
         it "combines the registrant_name, success, message, and execution time" do
-          expect(subject.to_text).to eq("#{subject.registrant_name}: PASSED #{subject.message} (5s)")
+          expect(subject.to_text).to eq("#{subject.registrant_name}: PASSED #{subject.message} (5.000s)")
         end
       end
 
