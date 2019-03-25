@@ -34,7 +34,7 @@ module OkComputer
     # Returns a String
     def to_text
       passfail = success? ? "passed" : "failed"
-      I18n.t("okcomputer.check.#{passfail}", registrant_name: registrant_name, message: message, time: "#{time ? sprintf('%0.000f', time) : '?'}s")
+      I18n.t("okcomputer.check.#{passfail}", registrant_name: registrant_name, message: message, time: "#{time ? sprintf('%.3f', time) : '?'}s")
     end
 
     # Public: The JSON output of performing the check
